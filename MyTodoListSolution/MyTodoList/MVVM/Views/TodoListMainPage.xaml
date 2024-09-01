@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyTodoList.MVVM.Views.TodoListMainPage"
+             BackgroundColor="#000000"
+             NavigationPage.HasNavigationBar="False"
+             Title="AngolaDevTech Community">
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <Image Source="devcommunity"/>
+        <StackLayout Padding="10">
+            <Border Padding="10, -15, 0, -15"
+                    Stroke="#f3f3f3f3"
+                    StrokeShape="RoundRectangle 2"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding NewTask}">
+                <StackLayout Orientation="Horizontal">
+                    <Entry Placeholder="New Task"
+                           HeightRequest="75"
+                           FontFamily="font02"
+                           FontSize="18"
+                           TextColor="#FFF"
+                           Text="{Binding Tarefa}"
+                           HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Add"
+                            Command="{Binding AddTarefaCommand}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            TextColor="#000"
+                            BackgroundColor="#FFFF00"/>
+                </StackLayout>
+            </Border>
+            <Border Padding="10, -15, 0, -15"
+                    Stroke="#f3f3f3f3"
+                    StrokeShape="RoundRectangle 2"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding EditTask}">
+                <StackLayout Orientation="Horizontal">
+                    <Entry Placeholder="Edit Task"
+                           HeightRequest="75"
+                           FontSize="18"
+                           FontFamily="font02"
+                           TextColor="#FFF"
+                           Text="{Binding EditarTask.Nome}"
+                           HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Edit"
+                            Command="{Binding PutTaskCommand}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            TextColor="#000"
+                            BackgroundColor="#FFFF00"/>
+                </StackLayout>
+            </Border>
+        </StackLayout>
+        <CollectionView VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="15, 5"
+                        ItemsSource="{Binding TarefaList}"
+                        SelectionMode="None"
+                        x:Name="colecao">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="0,2"
+                                 Padding="5"
+                                 HorizontalOptions="FillAndExpand">
+                        <StackLayout Orientation="Horizontal">
+
+                            <Border BackgroundColor="#1B1B1B"
+                                    HorizontalOptions="FillAndExpand"
+                                    StrokeShape="RoundRectangle 10"
+                                    Stroke="#101010"
+                                    Margin="0,2,5,2"
+                                    Padding="5">
+                                <StackLayout HorizontalOptions="StartAndExpand">
+                                    <Label Text="{Binding Nome}"
+                                           VerticalOptions="CenterAndExpand"
+                                           Margin="5,0,0,0"
+                                           FontFamily="font02"
+                                           FontSize="19"
+                                           TextColor="#FFF"
+                                           HorizontalOptions="StartAndExpand"/>
+                                </StackLayout>
+                            </Border>
+
+                            <StackLayout>
+                                <Border BackgroundColor="#1B1B1B"
+                                        Stroke="#101010"
+                                        Margin="0,2"
+                                        Padding="5"
+                                        StrokeShape="RoundRectangle 10">
+                                    <CheckBox Color="Green" IsChecked="{Binding Estado}">
+                                        <CheckBox.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.EditarEstadoCommand, Source={x:Reference Name = colecao}}" CommandParameter="{Binding .}"/>
+                                        </CheckBox.GestureRecognizers>
+                                    </CheckBox>
+                                </Border>
+                                <Border BackgroundColor="#1B1B1B"
+                                        Stroke="#101010"
+                                        Margin="0,2"
+                                        Padding="5"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Image Source="edit" WidthRequest="25" Margin="10">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.EditTaskCommand, Source={x:Reference Name = colecao}}" CommandParameter="{Binding .}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Border>
+                                <Border BackgroundColor="#1B1B1B"
+                                        Stroke="#101010"
+                                        Margin="0,2"
+                                        Padding="5"
+                                        StrokeShape="RoundRectangle 10">
+                                    <Image Source="delete" WidthRequest="25" Margin="10">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.DeleteTaskCommand, Source={x:Reference Name = colecao}}" CommandParameter="{Binding .}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Border>
+
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <StackLayout VerticalOptions="End"
+                     Orientation="Horizontal"
+                     HorizontalOptions="FillAndExpand"
+                     HeightRequest="65">
+            <Border HorizontalOptions="FillAndExpand"
+                    Margin="1"
+                    BackgroundColor="#2D2D2D"
+                    Stroke="#2D2D2D"
+                    StrokeShape="RoundRectangle 5">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CarregarTarefasCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="All&#10;tasks"
+                       FontFamily="font02"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="14"
+                       TextColor="#FFF"/>
+            </Border>
+
+            <Border HorizontalOptions="FillAndExpand"
+                    Margin="1"
+                    BackgroundColor="#2D2D2D"
+                    Stroke="#2D2D2D"
+                    StrokeShape="RoundRectangle 5">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CarregarTaskCompletedCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="Completed&#10; tasks"
+                       FontFamily="font02"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="14"
+                       TextColor="#FFF"/>
+            </Border>
+
+            <Border HorizontalOptions="FillAndExpand"
+                    Margin="1"
+                    BackgroundColor="#2D2D2D"
+                    Stroke="#2D2D2D"
+                    StrokeShape="RoundRectangle 5">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CarregarTaskNoCompletedCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="Incomplete &#10;tasks"
+                       FontFamily="font02"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="14"
+                       TextColor="#FFF"/>
+            </Border>
+
+            <Border HorizontalOptions="FillAndExpand"
+                    Margin="1"
+                    BackgroundColor="#2D2D2D"
+                    Stroke="#2D2D2D"
+                    StrokeShape="RoundRectangle 5">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DropDataBaseCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="Delete&#10;all"
+                       FontFamily="font02"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="CenterAndExpand"
+                       FontSize="14"
+                       TextColor="#FFF"/>
+            </Border>
+
+        </StackLayout>
+    </StackLayout>
+
+
+</ContentPage>

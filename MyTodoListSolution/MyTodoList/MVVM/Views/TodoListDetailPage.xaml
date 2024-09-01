@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyTodoList.MVVM.Views.TodoListDetailPage"
+
+             BackgroundColor="#000000"
+             Title="AngolaDevTech Community">
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     Padding="0, 20">
+            <Border Padding="10, -15, 0, -15"
+                    Stroke="#f3f3f3f3"
+                    StrokeShape="RoundRectangle 2"
+                    HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <Entry Placeholder="New Task"
+                           HeightRequest="75"
+                           FontSize="18"
+                           TextColor="#FFF"
+                           Text="{Binding Tarefa.Nome}"
+                           HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Edit"
+                            Command="{Binding AddTarefaCommand}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            BackgroundColor="#FFC200"/>
+                </StackLayout>
+            </Border>
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
